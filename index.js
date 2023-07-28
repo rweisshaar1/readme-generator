@@ -1,14 +1,8 @@
-// TODO: Include packages needed for this application
 const fs = require('fs');
 const inquirer = require('inquirer');
-// TODO: Create an array of questions for user input
-// const questions = [
-
-  
-// ];
 
 const layOut = [];
-
+console.log(layOut)
 inquirer 
   .prompt([  
   {
@@ -65,10 +59,11 @@ inquirer
 ])
   .then((response) => {
   createLayout (response)})
-  
 
 function createLayout (response) {
   // titleFunc(response.title);
+  writeToFile(`# ${response.title}
+  `);
   tableOfContents();
   description(response.description);
   installation(response.install);
@@ -80,21 +75,28 @@ function createLayout (response) {
   questionGit(response.git) ;
   questionlinkedIn(response.linkedIn) ;
 
-  
-  writeToFile(`# ${response.title}
-  `);
+  layoutFunction(layOut);
 
-  layOut.forEach(appendFunc) // <== this wont work!
-  // function layoutFunction () {
-  //   ;
-  // }
-  
-  function appendFunc (data) {
-    fs.appendFile(`README.md`,data, (err) =>
+};  
+
+// const delay = ms => new Promise(res => setTimeout(res, ms));
+
+// const yourFunction = async () => {
+//   await delay(2000);
+// };
+
+function layoutFunction (data) {
+  for (let i = 0; i < data.length; i++){
+    console.log(data[i]);
+    
+    fs.appendFileSync(`README.md`,data[i], (err) =>
     err ? console.log(err) : console.log('Apphend successful!'));
   }
-}
+};
 
+// function appendFunc (data) {
+  
+// }
 
 // function titleFunc (title) {
 //   const titleHeader = `# ${title}
@@ -105,25 +107,26 @@ function createLayout (response) {
 // }
 
 function tableOfContents () {
+  const tableHead = `
+## Table of Contents:
+`
   const table = `
-  ## Table of Contents:
-  
-  1. [Description](#description)
-  2. [Installation](#installation)
-  3. [Usage](#usage)
-  4. [License](#license)
-  5. [Contributing](#contributing)
-  6. [Tests](#tests)
-  7. [Questions](#questions)
-  `
-
+1. [Description](#description)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [License](#license)
+5. [Contributing](#contributing)
+6. [Tests](#tests)
+7. [Questions](#questions)
+`
+  layOut.push(tableHead);
   layOut.push(table);
 }
 
 function description (descrip) {
   const description = `
-  ## Description of Project:
-  - ${descrip}
+## Description:
+- ${descrip}
   `
 
   layOut.push(description) ;
@@ -132,8 +135,8 @@ function description (descrip) {
 
 function installation (response) {
   const installation = `
-  ## Installation:
-  - ${response}
+## Installation:
+- ${response}
   `
 
   layOut.push(installation) ;
@@ -142,55 +145,64 @@ function installation (response) {
 
 function usage (response) {
   const usage = `
-  ## Usage:
-  - ${response}
-  `
-
+## Usage:
+- ${response}
+`
   layOut.push(usage) ;
   // console.log(layOut)
 }
 
 function license (response) {
   var license = ``
-  var licenseInfo = ''
+  var licenseInfo = ``
   
   if (response === 'Apache 2.0' ) {
     license = `
-    ## License:
-    [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)]`
+## License:
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)]
+`
     licenseInfo = `
-    - Apache 2.0`
+- Apache 2.0
+`
     layOut.push(license,licenseInfo) ;
     // console.log(layOut);
   } else if (response === 'Boost' ) {
     license = `
-    ## License:
-    [![License](https://img.shields.io/badge/License-Boost_1.0-lightblue.svg)]`
+## License:
+[![License](https://img.shields.io/badge/License-Boost_1.0-lightblue.svg)]
+`
     licenseInfo = `
-    - Boost Software License 1.0`
+- Boost Software License 1.0
+`
     layOut.push(license,licenseInfo) ;
     // console.log(layOut);
   } else if (response === 'BSD' ) {
     license = `
-    ## License:
-    [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)]`
+## License:
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)]
+`
     licenseInfo = `
-    - BSD 3-Clause License`
+- BSD 3-Clause License
+`
     layOut.push(license,licenseInfo) ;
     // console.log(layOut);
   } else if ( response === 'MIT' ) {
     license = `
-    ## License:
-    [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)`
+## License:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+`
     licenseInfo = `
-    - MIT License`
+- MIT License
+`
     layOut.push(license,licenseInfo) ;
     // console.log(layOut);
   } else if (response === 'None') {
     license = `
-    ## License:`;
+## License:
+`;
     licenseInfo = `
-    - No License.` ;
+- No License.
+` ;
     layOut.push(license,licenseInfo) ;
     // console.log(layOut);
 }
@@ -198,8 +210,9 @@ function license (response) {
 
 function contributing (response) {
   const contribute = `
-  ## Contributing:
-  - ${response}`
+## Contributing:
+- ${response}
+`
 
   layOut.push(contribute) ;
   // console.log(layOut)
@@ -207,48 +220,38 @@ function contributing (response) {
 
 function test (response) {
   const test = `
-  ## Test:
-  - ${response}`
+## Test:
+- ${response}
+`
 
   layOut.push(test);
     // console.log(layOut)
 }
 
 function questionEmail (response) {
-  const question = `
-  ## Questions:
-  - ${response}`
-  layOut.push(question);
+  const question1 = `
+## Questions:
+- Please email questions to ${response}
+`
+  layOut.push(question1);
 }
 
 function questionGit (response) {
-  const question = `
-  - ${response}`
-  layOut.push(question);
-}
-
-function questionGit (response) {
-  const question = `
-  - ${response}`
-  layOut.push(question);
+  const question2 = `
+- GitHub username: https://github.com/${response}
+`
+  layOut.push(question2);
 }
 
 function questionlinkedIn (response) {
-  const question = `
-  - ${response}`
-  layOut.push(question);
-  console.log(layOut);
+  const question3 = `
+- LinkedIn: ${response}
+`
+  layOut.push(question3);
+  // console.log(layOut);
 }
 
-
-// TODO: Create a function to write README file
 function writeToFile(data) {
   fs.writeFile(`README.md`, data,(err)=>
   err ? console.error(err) : console.log('File Write Success!'))
 }
-
-// // TODO: Create a function to initialize app
-// function init() {}
-
-// // Function call to initialize app
-// init();
