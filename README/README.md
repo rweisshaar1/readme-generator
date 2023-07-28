@@ -9,6 +9,9 @@
 - Answer the prompts.
 - When the prompts are completed, a professional readme is created and added to the same project folder.
 
+## Starter Files:
+- I added a folder entitled starter files, which contains the files I was given to work with. 
+
 ## Screen Shot Video:
 <video width="620" height="540" controls>
   <source src="screen-recording.mov" type="video/mp4">
