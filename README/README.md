@@ -10,7 +10,9 @@
 - When the prompts are completed, a professional readme is created and added to the same project folder.
 
 ## Screen Shot Video:
-
+<video width="620" height="540" controls>
+  <source src="screen-recording.mov" type="video/mp4">
+</video>
 
 ## Link to GitHub Repo:
 https://github.com/rweisshaar1/readme-generator

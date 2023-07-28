@@ -2,7 +2,7 @@ const fs = require('fs');
 const inquirer = require('inquirer');
 
 let layOut = ``;
-console.log(layOut)
+
 inquirer 
   .prompt([  
   {
