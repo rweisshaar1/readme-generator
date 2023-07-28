@@ -1,7 +1,7 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
 
-const layOut = [];
+let layOut = ``;
 console.log(layOut)
 inquirer 
   .prompt([  
@@ -61,9 +61,7 @@ inquirer
   createLayout (response)})
 
 function createLayout (response) {
-  // titleFunc(response.title);
-  writeToFile(`# ${response.title}
-  `);
+  titleFunc(response.title);
   tableOfContents();
   description(response.description);
   installation(response.install);
@@ -74,37 +72,16 @@ function createLayout (response) {
   questionEmail(response.email);
   questionGit(response.git) ;
   questionlinkedIn(response.linkedIn) ;
-
-  layoutFunction(layOut);
+  
+  writeToFile(layOut);
 
 };  
 
-// const delay = ms => new Promise(res => setTimeout(res, ms));
-
-// const yourFunction = async () => {
-//   await delay(2000);
-// };
-
-function layoutFunction (data) {
-  for (let i = 0; i < data.length; i++){
-    console.log(data[i]);
-    
-    fs.appendFileSync(`README.md`,data[i], (err) =>
-    err ? console.log(err) : console.log('Apphend successful!'));
-  }
-};
-
-// function appendFunc (data) {
-  
-// }
-
-// function titleFunc (title) {
-//   const titleHeader = `# ${title}
-//   `
-
-//   layOut.push(titleHeader);
-//   // console.log(layOut)
-// }
+function titleFunc(response) {
+  const title = `# ${response}
+  `
+  layOut += title
+}
 
 function tableOfContents () {
   const tableHead = `
@@ -119,8 +96,8 @@ function tableOfContents () {
 6. [Tests](#tests)
 7. [Questions](#questions)
 `
-  layOut.push(tableHead);
-  layOut.push(table);
+  layOut += tableHead ;
+  layOut += table;
 }
 
 function description (descrip) {
@@ -129,7 +106,7 @@ function description (descrip) {
 - ${descrip}
   `
 
-  layOut.push(description) ;
+  layOut += description ;
   // console.log(layOut)
 }
 
@@ -139,7 +116,7 @@ function installation (response) {
 - ${response}
   `
 
-  layOut.push(installation) ;
+  layOut += installation ;
   // console.log(layOut)
 }
 
@@ -148,7 +125,7 @@ function usage (response) {
 ## Usage:
 - ${response}
 `
-  layOut.push(usage) ;
+  layOut += usage ;
   // console.log(layOut)
 }
 
@@ -164,7 +141,8 @@ function license (response) {
     licenseInfo = `
 - Apache 2.0
 `
-    layOut.push(license,licenseInfo) ;
+    layOut += license
+    layOut += licenseInfo ;
     // console.log(layOut);
   } else if (response === 'Boost' ) {
     license = `
@@ -174,7 +152,8 @@ function license (response) {
     licenseInfo = `
 - Boost Software License 1.0
 `
-    layOut.push(license,licenseInfo) ;
+    layOut += license
+    layOut += licenseInfo ;
     // console.log(layOut);
   } else if (response === 'BSD' ) {
     license = `
@@ -184,8 +163,9 @@ function license (response) {
     licenseInfo = `
 - BSD 3-Clause License
 `
-    layOut.push(license,licenseInfo) ;
-    // console.log(layOut);
+    layOut += license
+    layOut += licenseInfo ;
+
   } else if ( response === 'MIT' ) {
     license = `
 ## License:
@@ -194,8 +174,8 @@ function license (response) {
     licenseInfo = `
 - MIT License
 `
-    layOut.push(license,licenseInfo) ;
-    // console.log(layOut);
+    layOut += license
+    layOut += licenseInfo ;
   } else if (response === 'None') {
     license = `
 ## License:
@@ -203,8 +183,8 @@ function license (response) {
     licenseInfo = `
 - No License.
 ` ;
-    layOut.push(license,licenseInfo) ;
-    // console.log(layOut);
+    layOut += license
+    layOut += licenseInfo ;
 }
 };
 
@@ -214,8 +194,7 @@ function contributing (response) {
 - ${response}
 `
 
-  layOut.push(contribute) ;
-  // console.log(layOut)
+  layOut += contribute ;
 }
 
 function test (response) {
@@ -224,8 +203,7 @@ function test (response) {
 - ${response}
 `
 
-  layOut.push(test);
-    // console.log(layOut)
+  layOut += test;
 }
 
 function questionEmail (response) {
@@ -233,22 +211,21 @@ function questionEmail (response) {
 ## Questions:
 - Please email questions to ${response}
 `
-  layOut.push(question1);
+  layOut += question1;
 }
 
 function questionGit (response) {
   const question2 = `
 - GitHub username: https://github.com/${response}
 `
-  layOut.push(question2);
+  layOut += question2;
 }
 
 function questionlinkedIn (response) {
   const question3 = `
 - LinkedIn: ${response}
 `
-  layOut.push(question3);
-  // console.log(layOut);
+  layOut += question3;
 }
 
 function writeToFile(data) {
